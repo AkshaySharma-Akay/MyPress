@@ -1,0 +1,8 @@
+#settings.py secret info
+
+settings_secrets.py
+settings_backup.py
+db.sqlite3
+
+*.pyc
+*.pyo
