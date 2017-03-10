@@ -1,0 +1,24 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+	<title>{% block title%} Base Page {% endblock %}</title>
+	<meta charset='utf-8' />
+	<meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+	<link rel='stylesheet' type='text/css' href="{% static '/bootstrap/css/bootstrap.min.css' %}"/>
+	<link rel='stylesheet' type='text/css' href="{% static '/font-awesome/css/font-awesome.css' %}"/>
+	{% block head%}
+
+	{% endblock %}
+</head>
+<body>
+{% block body%}
+
+{% endblock %}
+<script type='text/javascript' src="{% static 'js/jquery.min.js' %}"></script>
+<script type='text/javascript' src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+{% block add_scripts %}
+
+{% endblock %}
+</body>
+</html>
