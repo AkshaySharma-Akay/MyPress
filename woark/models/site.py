@@ -1,8 +1,8 @@
 from django.db import models
 
 class Site(models.Model):
-	name = models.CharField(max_length=30)
-	link = models.URLField(max_length=200, default='https://localhost')
+	title = models.CharField(max_length=30)
+	link = models.URLField(max_length=200, default='http://localhost')
 
 	def __str__(self):
 		return self.name
