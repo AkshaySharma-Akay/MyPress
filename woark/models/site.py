@@ -5,7 +5,7 @@ class Site(models.Model):
 	link = models.URLField(max_length=200, default='http://localhost')
 
 	def __str__(self):
-		return self.name
+		return (self.title + " : " + self.link)
 
 class SiteContact(models.Model):
 	title = models.CharField(max_length=30)
