@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %} {{article.title}} {% endblock %}
+{% block head %}
+	<meta name='description' content='{{article.title}}'/>
+{% endblock %}
+
+{% block body %}
+<article>
+<h2>{{article.title}}</h2>
+<h5>By: {{article.author}} | Published On {{article.pub_date}}</h5>
+<p>
+{{article_content.markup_content}}
+
+<br /><br />
+{% for i in article.tag.all %} {{i}} {% endfor %}
+</p>
+</article>
+{% endblock %}
