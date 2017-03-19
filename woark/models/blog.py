@@ -25,7 +25,7 @@ class Article(models.Model):
 #main part
 	title = models.CharField(max_length=100)
 #tag
-	tag = models.ForeignKey(ArticleTag)#on_delete what to do with article check that
+	tag = models.ManyToManyField(ArticleTag)#on_delete what to do with article check that
 #dates
 	created_on = models.DateTimeField(auto_now_add = True)
 	pub_date = models.DateTimeField(auto_now = True)
@@ -40,7 +40,7 @@ class ArticleContent(models.Model):
 	markup_content = models.TextField(max_length = 7000)
 
 	def __str__(self):
-		pass
+		return("Article : " + self.article.title)
 
 
 class Comment(models.Model):
@@ -51,8 +51,7 @@ class Comment(models.Model):
 	content = models.TextField(max_length=700)
 
 	def __str__(self):
-		pass
-
+		return("Comment: " + user.username + article.title)
 
 
 
