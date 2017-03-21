@@ -44,14 +44,14 @@ class ArticleContent(models.Model):
 
 
 class Comment(models.Model):
-	article = models.OneToOneField(Article, on_delete = models.CASCADE)
-	user = models.OneToOneField(User, on_delete = models.CASCADE)
+	article = models.ForeignKey(Article, on_delete = models.CASCADE, related_name='comment')
+	user = models.ForeignKey(User, on_delete = models.CASCADE)
 	pub_on = models.DateTimeField(auto_now=True)
 	added_on = models.DateTimeField(auto_now_add = True)
 	content = models.TextField(max_length=700)
 
 	def __str__(self):
-		return("Comment: " + user.username + article.title)
+		return("Comment: " + self.user.username + self.article.title)
 
 
 
