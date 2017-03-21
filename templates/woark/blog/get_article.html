@@ -16,4 +16,28 @@
 {% for i in article.tag.all %} {{i}} {% endfor %}
 </p>
 </article>
+
+<section>
+<h3>Comment:</h3>
+{% if formerror %}
+<span>{{formerror}}</span>
+{% endif %}
+<form class='form' action='.' method='POST'>{% csrf_token %}
+<ul>
+	{{c_form.as_ul}}
+</ul>
+<input type='submit' value='Comment'/>
+</form>
+</section>
+
+<section class='comments'>
+{% if article_comment %}
+<h4>Comments:</h4>
+<ul>
+{% for comment in article_comment %}
+	<li>{{comment.content}} - {{comment.user.username}}</li>
+{% endfor %}
+</ul>
+{% endif %}
+</section>
 {% endblock %}
