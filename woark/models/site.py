@@ -41,3 +41,12 @@ class MenuItem(models.Model):
 
 	class Meta:
 		ordering = ['index']
+
+class ThemeInfo(models.Model):
+	title = models.CharField(max_length=20)
+	link = models.URLField(max_length = 200)
+	dev = models.CharField(max_length=100)
+	dev_link = models.URLField(max_length=200)
+
+	def __str__(self_):
+		return (self.title + " By " + self.dev)
