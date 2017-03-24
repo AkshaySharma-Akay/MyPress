@@ -1,1 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'theme-base.html' %}
+{% load staticfiles %}
+
+{% block add_page_head %}
+	<link rel='stylesheet' type='text/css' href="{% static 'woark/blog/css/blog.css' %}"/>
+	{% block add_blog_head %} {% endblock %}
+{% endblock %}
+{% block add_page_body %}
+	{% block add_blog_body %}
+
+	{% endblock %}
+{% endblock %}
