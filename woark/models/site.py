@@ -48,5 +48,5 @@ class ThemeInfo(models.Model):
 	dev = models.CharField(max_length=100)
 	dev_link = models.URLField(max_length=200)
 
-	def __str__(self_):
+	def __str__(self):
 		return (self.title + " By " + self.dev)
