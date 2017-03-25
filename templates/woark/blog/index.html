@@ -1,0 +1,69 @@
+{% extends 'woark/blog/base.html' %}
+
+{% load staticfiles %}
+	{% block title %} {{blog.title}} : {{blog.description}} {% endblock %}
+
+{% block add_blog_head %}
+
+{% endblock %}
+
+{% block add_blog_body %}
+
+<section class='article-wrapper'>
+<section class='container'>
+<section class='article'>
+<!-- Adding the Blog header here -->
+<hgroup class='blog-header'>
+	<span class='blog-title'><a href='#'>{{blog.title}}</a></span>
+	<span class='blog-description'>
+		{{blog.description}}
+	</span>
+</hgroup>
+
+{% if article_pack %}
+{% for article in article_pack %}
+
+<article class='article-view'>
+	<hgroup class='panel-heading'>
+		<span class='article-view-heading'>
+			<a href='#'>
+				{{article.title}}
+			</a>
+		</span> 
+		<span class='article-view-subheading'>
+			By <a href='#'><i class='fa fa-user'></i> {{article.author}} </a> |
+			Posted On : <a href='#'><i class='fa fa-calendar'></i> {{article.pub_date}} </a>
+		</span>
+	</hgroup>
+
+	<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		 {{article.articlecontent.markup_content|lower|truncatewords:50}}
+	</p>
+	<section class='article-view-footer'>
+		<a class='article-footer-tag' href='#'>Tags</a>
+		<a href='#'>Documentations</a>
+		<a href='#'>Blog</a>
+		<a href='#'>Event</a>
+		<a href="{% url 'get_article' blog.id article.id %}">Read More...</a>
+	</section>
+</article>
+
+{% endfor %}
+
+<footer>
+		<section class='article-footer-tags'>
+			<b>List Articles By:</b>
+			<a href='#'>Tags</a>
+			<a href='#'>Dates</a>
+			<a href='#'>Authors</a>
+			<a href='#'>All Articles</a>
+		</section>
+</footer>
+{% endif %}
+
+</section><!-- / .article -->
+</section><!-- / .container -->
+</section><!-- / .blog-wrapper -->
+
+
+{% endblock %}
