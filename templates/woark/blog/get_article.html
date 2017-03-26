@@ -1,7 +1,6 @@
 {% extends 'woark/blog/base.html' %}
 {% load staticfiles %}
 {% block title %} {{article.title}} {% endblock %}
-
 {% block add_blog_head %}
 	<meta name='description' content='{{article.title}}'/>
 {% endblock %}
@@ -85,6 +84,6 @@
 
 
 {% comment %}
-	{{article_content.markup_content|lower|truncatewords:25}}
+{{article_content.markup_content|lower|truncatewords:25}}
 {% endcomment %}
 {% endblock %}
