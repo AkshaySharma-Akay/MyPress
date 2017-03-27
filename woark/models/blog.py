@@ -15,7 +15,7 @@ class Blog(models.Model):
 
 class ArticleTag(models.Model):
 	title = models.CharField(max_length=50)
-
+	blog = models.ManyToManyField(Blog)
 	def __str__(self):
 		return ("Tag : " + self.title)
 
