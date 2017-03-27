@@ -1,90 +1,69 @@
 {% extends 'woark/blog/base.html' %}
+
 {% load staticfiles %}
-{% block title %} {{article.title}} {% endblock %}
+	{% block title %} {{blog.title}} : {{blog.description}} {% endblock %}
 
 {% block add_blog_head %}
-	<meta name='description' content='{{article.title}}'/>
+
 {% endblock %}
 
 {% block add_blog_body %}
 
-
-<!-- .article -->
-
-<section class="article-wrapper">
+<section class='article-wrapper'>
 <section class='container'>
-<article class='article'>
-	<header>
-		<hgroup>
-			<span class='heading'>{{article.title}}</span><hr />
-			<span class='subheading'>
-				By <a href='#'><i class='fa fa-user'></i> {{article.author}}</a> |
-				Posted On : <a href='#'><i class='fa fa-calendar'></i> {{article.pub_date}}</a>
-			</span><hr />
-		</hgroup>
-	</header>
-	
-	<p>
-		{{article_content.markup_content}}
+<section class='article'>
+<!-- Adding the Blog header here -->
+<hgroup class='blog-header'>
+	<span class='blog-title'><a href='#'>{{blog.title}}</a></span>
+	<span class='blog-description'>
+		{{blog.description}}
+	</span>
+</hgroup>
+
+{% if article_pack %}
+{% for article in article_pack %}
+
+<article class='article-view'>
+	<hgroup class='panel-heading'>
+		<span class='article-view-heading'>
+			<a href='#'>
+				{{article.title}}
+			</a>
+		</span> 
+		<span class='article-view-subheading'>
+			By <a href='#'><i class='fa fa-user'></i> {{article.author}} </a> |
+			Posted On : <a href='#'><i class='fa fa-calendar'></i> {{article.pub_date}} </a>
+		</span>
+	</hgroup>
+
+	<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		 {{article.articlecontent.markup_content|lower|truncatewords:50}}
 	</p>
-
-	<footer>
-	
-	{% if article.tag %}
-		<section class='article-footer-tags'>
-			<a class='article-footer-tag' href='#'>Tags</a>
-			{% for i in article.tag.all %} 
-				<a href='#'>{{i}}</a>
-			{% endfor %}
-		</section>
-	{% endif %}
-
-	<section class='comment-form'>
-		{% if formerror %}
-			<span class='comment-form-errors'>{{formerror}}</span>
-		{% endif %}
-
-		<form class='form' action='.' method='post'>{% csrf_token %}
-			<ul>
-				{{c_form.as_ul}}
-		    	<li><input type="submit" value='Submit'/></li>
-		</form>
+	<section class='article-view-footer'>
+		<a class='article-footer-tag' href='#'>Tags</a>
+		<a href='#'>Documentations</a>
+		<a href='#'>Blog</a>
+		<a href='#'>Event</a>
+		<a href="{% url 'get_article' blog.id article.id %}">Read More...</a>
 	</section>
+</article>
 
-		{% if article_comment %}
-			<section class='comment-list'>
-			{% for comment in article_comment %}
-				<div class="comment-object media">
-				  <div class="media-left">
-				    <a href="#">
-				    	{{comment.user.username}} <img class="media-object" src="pics/profiles/coffee.jpeg" alt="...">
-				    </a>
-				  </div>
-				  <div class="media-body">On {{comment.pub_on|date}}:<br />
-				  	{{comment.content}}
-				  </div>
-				</div>
-			{% endfor %}
-			</section>
-		{% else %}
-			<section class='comment-list'>
-				<div class="comment-object media">
-				  <div class="media-body">
-				  	No Comments Yet!
-				  </div>
-				</div>
-			</section>
-		{% endif %}
+{% endfor %}
+
+<footer>
+		<section class='article-footer-tags'>
+			<b>List Articles By:</b>
+			<a href='#'>Tags</a>
+			<a href='#'>Dates</a>
+			<a href='#'>Authors</a>
+			<a href='#'>All Articles</a>
+		</section>
+</footer>
+{% endif %}
+
+</section><!-- / .article -->
+</section><!-- / .container -->
+</section><!-- / .blog-wrapper -->
 
 
-	</footer>
-</article><!-- / .article -->
-
-</section> <!-- / .container -->
-</section><!-- / .article-wrapper -->
-
-
-{% comment %}
-	{{article_content.markup_content|lower|truncatewords:25}}
-{% endcomment %}
 {% endblock %}
