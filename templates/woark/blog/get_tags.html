@@ -24,8 +24,7 @@
 <h3>All Tags:</h3><hr />
 <ul>
 {% for tag in tags %}
-
-	<li><a href='#'>{{tag.title}}</a></li>
+	<li><a href="{% url 'get_tag_pack' blog.id tag.id 1 %}">{{tag.title}}</a></li>
 {% endfor %}
 </ul>
 {% else %}
