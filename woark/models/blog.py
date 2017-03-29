@@ -31,7 +31,7 @@ class Article(models.Model):
 	pub_date = models.DateTimeField(auto_now = True)
 
 	def __str__(self):
-		return ("Article : " + str(self.title))
+		return ("Article : " + str(self.title) + " | Blog : " + str(self.blog.title))
 
 
 class ArticleContent(models.Model):
