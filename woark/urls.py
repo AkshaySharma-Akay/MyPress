@@ -15,4 +15,6 @@ urlpatterns = [
 
 	#tags
 	url(r'^blog/(?P<blog_id>[0-9]+)/tags/$', views.get_tags, name = 'get_tags'),
+
+	url(r'^blog/(?P<blog_id>[0-9]+)/tag/(?P<tag_id>[0-9]+)/(?P<pack_count>[0-9]+)/$', views.get_tag_pack, name = 'get_tag_pack'),
 ]
