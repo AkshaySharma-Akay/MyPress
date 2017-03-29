@@ -100,6 +100,8 @@ def get_blog_pack(request, blog_id, pack_count):
 	
 	a = article_count * (pack_count - 1)
 	b = a + article_count
+	previous_pack = pack_count - 1
+	next_pack = pack_count + 1
 
 	article_pack = blog.article_set.all().order_by('-pub_date')[a:b]
 	context = {
@@ -110,7 +112,8 @@ def get_blog_pack(request, blog_id, pack_count):
 		'themeinfo':ThemeInfo.objects.get(title = 'Woark'),
 		'blog':blog,
 		'article_pack':article_pack,
-		'pack_count':pack_count,
+		'p_pack':previous_pack,
+		'n_pack':next_pack,
 	}
 	return render(request, template_name, context)
 
@@ -141,7 +144,7 @@ def get_tag_pack(request, blog_id, tag_id, pack_count):
 	a = int(pack_count) - 1
 	b = a + 3
 	article_pack = blog.article_set.filter(tag = tag_id)[a:b]
-	template_name = 'woark/blog/get_pack.html'
+	template_name = 'woark/blog/get_tag_pack.html'
 	context = {
 		'site': Site.objects.get(id='1'),
 		'site_contact': SiteContact.objects.all(),
@@ -151,6 +154,8 @@ def get_tag_pack(request, blog_id, tag_id, pack_count):
 		'blog':blog,
 		'article_pack':article_pack,
 		'gtp_tag':gtp_tag,
+		'p_pack':int(pack_count) - 1,
+		'n_pack':int(pack_count) + 1,
 	}
 	return render(request, template_name, context)
 
