@@ -22,7 +22,6 @@
 
 {% if article_pack %}
 {% for article in article_pack %}
-
 <article class='article-view'>
 	<hgroup class='panel-heading'>
 		<span class='article-view-heading'>
@@ -40,10 +39,6 @@
 		 {{article.articlecontent.markup_content|lower|truncatewords:50}}
 	</p>
 	<section class='article-view-footer'>
-		<a class='article-footer-tag' href='#'>Tags</a>
-		<a href='#'>Documentations</a>
-		<a href='#'>Blog</a>
-		<a href='#'>Event</a>
 		<a href="{% url 'get_article' blog.id article.id %}">Read More...</a>
 	</section>
 </article>
@@ -51,15 +46,18 @@
 {% endfor %}
 
 <footer>
-		<section class='article-footer-tags'>
-			<b>List Articles By:</b>
-			<a href='#'>Tags</a>
-			<a href='#'>Dates</a>
-			<a href='#'>Authors</a>
-			<a href='#'>All Articles</a>
-		</section>
+  <ul class="pager">
+  {% if p_pack != 0 %}
+    <li class="previous"><a href="{% url 'get_blog_pack' blog.id p_pack %}"><span aria-hidden="true">&larr;</span> Previous </a></li>
+  {% endif %}
+    <li class="next"><a href="{% url 'get_blog_pack' blog.id n_pack%}">Next <span aria-hidden="true">&rarr;</span></a></li>
+  </ul>
 </footer>
+{% else %}
+<h3>Sorry there are no more articles in blog: {{blog.title}}</h3>
+
 {% endif %}
+
 
 </section><!-- / .article -->
 </section><!-- / .container -->
