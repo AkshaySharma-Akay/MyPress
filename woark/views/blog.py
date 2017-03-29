@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib.auth.models import User
 from woark.models import Article, ArticleContent, Comment,Blog
 from woark.forms import ArticleCommentForm
@@ -7,6 +8,7 @@ from woark.models import ArticleTag
 
 
 def blog(request):
+	"View to list all of the blogs"
 	try:
 		blogs = Blog.objects.all()
 	except Blog.DoesNotExist:#test it whether it works when there is no data available
@@ -25,6 +27,7 @@ def blog(request):
 
 
 def get_article(request, blog_id, article_id):
+	"show a specific article with of blog with id = blog_id and with article = article_id"
 	template_name = 'woark/blog/get_article.html'
 	form = ArticleCommentForm()
 	blog = Blog.objects.get(id=blog_id)
@@ -67,6 +70,7 @@ def get_article(request, blog_id, article_id):
 # Note : woark/blog/index.html : Template is used for both the get_blog() and the get_blog_pack() views
 #
 def get_blog(request, blog_id):
+	"get the requested blog and request the pack of articles"
 	template_name = 'woark/blog/index.html'
 	try:
 		blog = Blog.objects.get(id=blog_id)
@@ -77,6 +81,7 @@ def get_blog(request, blog_id):
 
 
 def get_blog_pack(request, blog_id, pack_count):
+	"returns the pack of the article, also used by get_blog view too"
 	#pack_count : the pack_count is the no. of the packet 
 	#to be accessed 1st time, 2nd time or so on get it doc. is important
 	template_name = "woark/blog/get_pack.html"
@@ -105,6 +110,7 @@ def get_blog_pack(request, blog_id, pack_count):
 		'themeinfo':ThemeInfo.objects.get(title = 'Woark'),
 		'blog':blog,
 		'article_pack':article_pack,
+		'pack_count':pack_count,
 	}
 	return render(request, template_name, context)
 
@@ -124,3 +130,27 @@ def get_tags(request, blog_id):
 		'tags':tags,
 	}
 	return render(request, template_name, context)
+
+def get_tag_pack(request, blog_id, tag_id, pack_count):
+	blog = Blog.objects.get(id = blog_id)
+	try:
+		gtp_tag = ArticleTag.objects.get(id = tag_id)
+	except:
+		return HttpResponse("Sorry this tag doesn't exists")
+
+	a = int(pack_count) - 1
+	b = a + 3
+	article_pack = blog.article_set.filter(tag = tag_id)[a:b]
+	template_name = 'woark/blog/get_pack.html'
+	context = {
+		'site': Site.objects.get(id='1'),
+		'site_contact': SiteContact.objects.all(),
+		'site_social_profile': SiteSocialProfile.objects.all(),
+		'header_menu': MenuItem.objects.filter(menu__name = 'Header Menu'),
+		'themeinfo':ThemeInfo.objects.get(title = 'Woark'),
+		'blog':blog,
+		'article_pack':article_pack,
+		'gtp_tag':gtp_tag,
+	}
+	return render(request, template_name, context)
+
