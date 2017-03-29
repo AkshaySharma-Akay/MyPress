@@ -33,7 +33,7 @@
 		<section class='article-footer-tags'>
 			<a class='article-footer-tag' href='#'>Tags</a>
 			{% for i in article.tag.all %} 
-				<a href='#'>{{i}}</a>
+				<a href="{% url 'get_tag_pack' article.blog.id i.id 1 %}">{{i}}</a>
 			{% endfor %}
 		</section>
 	{% endif %}
