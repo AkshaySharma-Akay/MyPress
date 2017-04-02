@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'evo.apps.EvoConfig',
     'woark.apps.WoarkConfig',
     'django.contrib.admin',
     'django.contrib.auth',
