@@ -12,13 +12,13 @@ ACCOUNT_TYPE=[
 ]
 
 class EvoUser(models.Model):
-	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='account_type')
+	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	account_type = models.CharField(max_length=3,choices=ACCOUNT_TYPE,default='s')
 
 	def __str__(self):
 		if(self.account_type == 't'):
 			self.ac_type = "Tutor"
-		elif(self.account_type == 'deo')
+		elif(self.account_type == 'deo'):
 			self.ac_type = "Data Entry Operator"
 		else:
 			self.ac_type = "Student"
