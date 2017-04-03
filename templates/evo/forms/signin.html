@@ -1,0 +1,9 @@
+{% extends 'evo/forms/base.html' %}
+{% block title %} Login {% endblock %}
+
+{% block formbody %}
+<form action='.' method='post'>{% csrf_token %}
+	{{form.as_ul}}
+	<input type='submit' value='Login'/>
+</form>
+{% endblock %}
