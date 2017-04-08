@@ -11,13 +11,11 @@ def signinredirect(request):
 	try:
 		ac_type = user.evouser.account_type
 		if ac_type == 's':
-			return redirect('/student/')
+			return redirect('student_dashboard')
 		elif ac_type == 't':
-			return redirect('/tutor/')
-		elif ac_type == 'deo' :
-			return redirect('/deo/')
+			return redirect('tutor_dashboard')
 		else:
-			return("Sorry Your Account Is Not")
+			return HttpResponse("Sorry Your Account Is Not")
 	except EvoUser.DoesNotExist:
 		return HttpResponse("Sorry Your Account Type is not Defined, Please Contact Administration")
 	return HttpResponse('Error')
@@ -39,16 +37,15 @@ def signin(request):
 		email = request.POST.get('email','')
 		password = request.POST.get('password','')
 		user = auth.authenticate(username=username, password=password)
-
 		if user is not None and user.is_active:
 			if user.is_active:
 				auth.login(request,user)
 				return signinredirect(request)
 			else:
-				context['state'] = form.errors
-
+				context['form'] = form
+				context['state'] = "Sorry Your Account is Not Active Contact Administration Please!"
 		else:
-			context['state'] = form.errors
+			context['state'] = "Invalid Username or Password!"
 
 	return render(request, template_name,context)
 
