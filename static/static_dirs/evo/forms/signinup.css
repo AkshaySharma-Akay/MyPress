@@ -1,0 +1,113 @@
+body{	
+    background: #333146;
+}
+body-wrapper{
+	background-color: rgba(00,00,00,0.25);
+}
+.header{
+	margin:0;
+	border:none;
+	border-radius:0;
+	background-color: #fff;
+	border-bottom:5px solid #ED6639;
+}
+
+.navbar-brand{
+	font-weight: bold;
+}
+.header .navbar-brand{
+	color:#ED6639;
+}
+.header .nav a{
+	font-weight: bold;
+}
+/* .wrapper */
+.wrapper{
+	margin:100px 0 ; 
+}
+.wrapper .row{
+	padding:0;
+	margin:0;
+}
+
+/* .article-wrapper */
+.form-info{
+	padding:30px 0;
+}
+.form-info-header{
+	display:block;
+	text-align: center;
+	font-size:120px;
+	color:#fff;
+}
+.form-info-header span{
+	font-size:35px;
+	color:#fff;
+	display:block;
+	font-weight: bold;
+	text-shadow:0px 0px 1px #ED6639;
+}
+.form-info-link a{
+	display:block;
+	padding:5px 0;
+	color:#fff;
+}
+
+/* .from-wrapper */
+.form-wrapper{
+	background-color: #fff;
+	padding:20px;
+	box-shadow:-7px 0px 3px -9px #fff;
+	overflow: hidden;
+}
+
+.form-header span{
+	font-size:18px;
+	font-weight:bold;
+	padding:0 20px;
+	color:#333146;
+}
+.form-header span i{
+	color:#333146;
+}
+.form-list{
+	padding:20px 20px 0 20px;
+	list-style: none;
+}
+.form-list li{
+	padding:10px 0;
+}
+.form-list li label{
+	display:block;
+}
+.form-list li input{
+	border:none;
+	padding:10px 15px;
+	min-width:70%;
+	border-radius:5px;
+}
+.form-list li input[type='submit']{
+	background-color:#ED6639;
+	color:#fff;
+	font-weight:bold;
+}
+.form-state{
+	color:#ED6639;
+	font-weight: bold;
+	padding:10px 20px 0;
+}
+.form-footer{
+	padding:0 20px;
+}
+.form-footer a{
+	text-decoration: underline;
+}
+
+@media all and (max-width:970px){
+	.wrapper{
+		margin:15px 0 0 0;
+	}
+}
+.or{
+	text-orientation: sideways;
+}
