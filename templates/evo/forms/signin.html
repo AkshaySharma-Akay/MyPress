@@ -1,9 +1,72 @@
 {% extends 'evo/forms/base.html' %}
+{% load staticfiles %}
 {% block title %} Login {% endblock %}
 
+{% block formhead %}
+	<link rel='stylesheet' type='text/css' href="{% static 'evo/forms/signinup.css' %}"/>
+{% endblock %}
+
 {% block formbody %}
-<form action='.' method='post'>{% csrf_token %}
-	{{form.as_ul}}
-	<input type='submit' value='Login'/>
-</form>
+
+<!-- header -->
+<header class='header navbar navbar-default'>
+<section class='container'>
+    <hgroup class="navbar-header">
+      	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-menu" aria-expanded="false">
+        	<span class="sr-only">Toggle navigation</span>
+        	<i class='fa fa-bars'></i>
+      	</button>
+		<a href='#' class='navbar-brand'>Evo</a>
+	</hgroup>
+	<div class="collapse navbar-collapse" id="header-menu">
+		<ul class='nav navbar-nav navbar-right'>
+			<li><a href='#'><i class='fa fa-user'></i> Login</a></li>
+			<li><a href='#'><i class='fa fa-sign-in'></i> Sign Up</a></li>
+		</ul>
+	</div>
+</section>
+</header>
+
+
+<!-- form-wrapper -->
+<section class='wrapper'>
+<section class='row'>
+	<section class='form-info col-md-5 '>
+		<hgroup class='form-info-header'>
+			<i class='fa fa-user-circle'></i>
+			<span> Hello There! </span>
+			<span class='subheading'>[ : ()  </span>
+		</hgroup>
+	</section>
+	<section class='col-md-7 form-wrapper'>
+		<form class='form' action='.' method='post'>{% csrf_token %}
+			<header class='form-header'>
+				<span><i class='fa fa-sign-in'></i> Login</span>
+			</header>
+			{% if state %}
+				<section class='form-state'>
+					<span>{{state}}</span>
+				</section>
+			{% endif %}
+			<ul class='form-list'>	
+				{% for field in form %}
+					<li>{{form.errors}}
+						{% if field.error %}
+							{{field.error}}
+						{% endif %}
+
+						{{field.label_tag}}
+						{{field}}
+					</li>
+				{% endfor %}
+				<li><input type='submit' value='Login'/></li>
+			</ul>
+		<footer class='form-footer'>
+				<a href='#'>Forgot Password</a> Or
+				<a href='#'>Don't Have An Account? Create Now..</a>
+			</footer>
+		</form>
+	</section>
+</section><!-- / .row -->
+</section><!-- / .wrapper -->
 {% endblock %}
