@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect, HttpResponseRedirect, HttpResponse
 from django.contrib import auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from evo.forms import SigninForm
+from evo.forms import SigninForm, SignupForm
 from evo.models import EvoUser
 
 @login_required(login_url = '/student/login/')
@@ -51,7 +51,37 @@ def signin(request):
 
 
 
+def signup(request):
+	template_name = "evo/forms/signup.html"
+	form = SignupForm()
+	ac_type = EvoUser()
+	context = {'form':form}
 
+	#Time to process the form data
+	if (request.method == 'POST'):
+		form = SignupForm(request.POST)
+		if form.is_valid():
+			user = form.save(commit=False)
+			username = form.cleaned_data['username']
+			password = form.cleaned_data['password']
+			email = form.cleaned_data['email']
+			user.set_password(password)
+			user.save()
 
-def evo_index(request):
-	pass
+			#set the account type to student
+			ac_type.user = user
+			ac_type.account_type = 's'
+			ac_type.save()
+
+			#login in the user
+			user = authenticate(username=username,password=password)
+			if user is not None:
+				login(request,user)
+				return redirect('/student/login/')
+		else:
+			context['form'] = form
+
+	context['form'] = form
+
+	return render(request, template_name,context)
+
