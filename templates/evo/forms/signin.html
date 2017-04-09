@@ -20,8 +20,8 @@
 	</hgroup>
 	<div class="collapse navbar-collapse" id="header-menu">
 		<ul class='nav navbar-nav navbar-right'>
-			<li><a href='#'><i class='fa fa-user'></i> Login</a></li>
-			<li><a href='#'><i class='fa fa-sign-in'></i> Sign Up</a></li>
+			<li><a href="{% url 'signin' %}"><i class='fa fa-sign-in'></i> Login</a></li>
+			<li><a href="{% url 'signup' %}"><i class='fa fa-user'></i> Sign Up</a></li>
 		</ul>
 	</div>
 </section>
@@ -50,9 +50,9 @@
 			{% endif %}
 			<ul class='form-list'>	
 				{% for field in form %}
-					<li>{{form.errors}}
-						{% if field.error %}
-							{{field.error}}
+					<li>
+						{% if field.errors %}
+							{{field.errors}}
 						{% endif %}
 
 						{{field.label_tag}}
