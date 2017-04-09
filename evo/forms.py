@@ -13,3 +13,14 @@ class SigninForm(forms.ModelForm):
 			'password':forms.PasswordInput(attrs={'placeholder':'Password'}), #,'class':'form-control'}),
 		}
 
+# StudentForm for the Signup Form for Students
+class SignupForm(forms.ModelForm):
+
+	class Meta:
+		model = User
+		fields = ['username','email','password']
+		widgets = {
+			'username':forms.TextInput(attrs={'placeholder':'Username'}),
+			'password':forms.PasswordInput(attrs={'placeholder':'Password'}),
+			'email':forms.EmailInput(attrs={'placeholder':'E-Mail'}),
+		}
