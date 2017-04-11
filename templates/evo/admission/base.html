@@ -1,0 +1,40 @@
+{% extends 'evo/base.html' %}
+{% load staticfiles %}
+
+{% block title %} Admission Base {% endblock %}
+
+{% block head %}
+	<link rel='stylesheet' type='text/css' href="{% static 'evo/admission/admission.css' %}"/>
+	{% block admission_head %} {% endblock %}
+{% endblock %}
+
+{% block body %}
+<!-- header -->
+<header class='header navbar navbar-default'>
+<section class='container'>
+    <hgroup class="navbar-header">
+      	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-menu" aria-expanded="false">
+        	<span class="sr-only">Toggle navigation</span>
+        	<i class='fa fa-bars'></i>
+      	</button>
+		<a href='#' class='navbar-brand'>Dashboard</a>
+	</hgroup>
+	<div class="collapse navbar-collapse" id="header-menu">
+		<ul class='nav navbar-nav navbar-left'>
+			<li><a href="{% url 'student_dashboard' %}"><i class='fa fa-dashboard'></i> Dashboard</a></li>
+			<li><a href="{% url 'admission' %}"><i class='fa fa-edit'></i> Admission</a></li>
+		</ul>
+		<ul class='nav navbar-nav navbar-right'>
+			<li class="dropdown">
+          		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class='fa fa-user-circle'></i> Akshay Sharma <span class="caret"></span></a>
+		        <ul class="dropdown-menu">
+		            <li><a href="/logout/"><i class='fa fa-unlock'></i> Logout</a></li>
+		        </ul>
+       		</li>
+		</ul>
+	</div>
+</section>
+</header>
+
+{% block admission_body %}{% endblock %}
+{% endblock %}
