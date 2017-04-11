@@ -1,0 +1,84 @@
+{% extends 'evo/admission/base.html' %}
+{% block admission_body %}
+<section class='da-wrapper'>
+<section class='container'>
+
+<section class='da-wrapper'>
+<section class='container'>
+<nav class='admission-nav'>
+	<ol class="breadcrumb">
+		<li><a href="{% url 'admission_basic' %}">Basic Details</a></li>
+		<li><a href="#">Addresses</a></li>
+		<li><a href="#">Qualification Details</a></li>
+		<li><a href="#">Uploads</a></li>
+		<li><a href="#">Terms and Condition</a></li>
+		<li><a href="#">Final Submission</a></li>
+	</ol>
+</nav>
+
+
+<!-- .admission-form -->
+{% block admission_body_form %}
+
+<section class='admission-form'>
+
+<section class='panel panel-default'>
+	<hgroup class='panel-heading'>
+		<span class='admission-form-icon'>
+			<i class='fa fa-user-circle'></i>
+		</span>
+		<span class='admission-form-heading'>Welcome To Admission Panel</span>
+		<span class='admission-form-heading'>{{user.username}}</span>
+	</hgroup>
+	<article class='panel-body'>
+		<h3>Your Admission Status: </h3>
+	</article>
+	<table class='table'>
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Page </th>
+				<th>Status</th>
+			<tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th class='scope'>1.</th>
+				<td>Basic Details</td>
+				<td>Not Completed</td>
+			<tr>
+			<tr>
+				<th class='scope'>2.</th>
+				<td>Addresses</td>
+				<td>Not Completed</td>
+			<tr>
+			<tr>
+				<th class='scope'>3.</th>
+				<td>Qualification Details</td>
+				<td>Not Completed</td>
+			<tr>
+			<tr>
+				<th class='scope'>4.</th>
+				<td>Uploads</td>
+				<td>Not Completed</td>
+			<tr>
+			<tr>
+				<th class='scope'>5.</th>
+				<td>Terms and Conditions</td>
+				<td>Not Completed</td>
+			<tr>
+			<tr>
+				<th class='scope'>6.</th>
+				<td>Confirmation Pages</td>
+				<td>Not Completed</td>
+			<tr>
+		</tbody>
+	</table>
+</section>
+
+</section>
+{% endblock %}
+
+</section> <!-- / .container -->
+</section> <!-- / .da-wrapper -->
+{% endblock %}

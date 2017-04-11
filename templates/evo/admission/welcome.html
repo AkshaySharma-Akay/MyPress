@@ -1,0 +1,50 @@
+{% extends 'evo/admission/base.html' %}
+
+{% block admission_body %}
+
+<section class='da-wrapper'>
+<section class='container'>
+
+<!-- welcome message on dashboard -->
+<section class='row da-profile'>
+	<section class='da-welcome col-md-3'>
+		<hgroup>
+			<i class='fa fa-user-circle'></i>
+		</hgroup>
+		<span>Welcome, {{user.username}}</span>
+	</section>
+	<section class='da-panel-msg col-md-8 col-md-push-1'>
+		<div class="panel panel-default">
+			<div class="panel-heading"> Welcome To Evo</div>
+			<div class="panel-body">
+			<p>
+				Hello {{user.username}}, glad you registered to Evo. Evo is a Django based web application that allows educational institutes to make learning process more interesting and efficient, yeah we know that our application is in its development phase, but more than that its innovative and guess what people behind this idea are creative and believe me, when I say this, this application is going to change a lot of things. Change, well not for destruction but for a better learning method for everyone.
+			</p>
+				<span class='da-panel-msg-author'>By Akshay Sharma</span>
+				<span class='da-panel-msg-author'>(Founder of Evo)</span>
+			</div>
+		</div>
+	</section>
+</section><!-- / .row -->
+
+<!-- Notifications -->
+
+<section class='da-notifications'>
+
+<article class='panel panel-default'>
+	<hgroup class='panel-heading'>
+		<span>Notifications</span>
+	</hgroup>
+	<ul class="list-group">
+	    <li class="list-group-item">Welcome To Evo!</li>
+	    <li class="list-group-item">Please Complete The Admission Process To Access Other Features.</li>
+	    <li class="list-group-item">Complete your Profile Once done with Admission Process.</li>
+	</ul>
+</article>
+
+</section>
+
+</section> <!-- / .container -->
+</section> <!-- / .da-wrapper -->
+
+{% endblock %}
