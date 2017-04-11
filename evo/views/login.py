@@ -3,7 +3,7 @@ from django.contrib import auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from evo.forms import SigninForm, SignupForm
-from evo.models import EvoUser
+from evo.models import EvoUser, StatusStudent
 
 @login_required(login_url = '/student/login/')
 def signinredirect(request):
@@ -55,6 +55,7 @@ def signup(request):
 	template_name = "evo/forms/signup.html"
 	form = SignupForm()
 	ac_type = EvoUser()
+	status = StatusStudent()
 	context = {'form':form}
 
 	#Time to process the form data
@@ -73,11 +74,17 @@ def signup(request):
 			ac_type.account_type = 's'
 			ac_type.save()
 
+			#set status of student
+			status.student = user
+			status.admission = False
+			status.profile = False
+			status.save()
+
 			#login in the user
 			user = authenticate(username=username,password=password)
 			if user is not None:
 				login(request,user)
-				return redirect('/student/login/')
+				return redirect('/evo/login/')
 		else:
 			context['form'] = form
 
