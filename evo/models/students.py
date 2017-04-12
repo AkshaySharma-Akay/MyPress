@@ -70,3 +70,18 @@ class StudentCourse(models.Model):
 
 	def __str__(self):
 		return (self.course.title)
+
+class AdmissionStatus(models.Model):
+	"Model To Store the Admission Status Of A Student"
+	student =  models.OneToOneField(User, on_delete = models.CASCADE)
+	admission_status = models.BooleanField( default = False )
+	basic = models.BooleanField( default = False)
+	address = models.BooleanField( default = False)
+	qualifications = models.BooleanField( default = False)
+	uploads = models.BooleanField( default = False)
+	terms = models.BooleanField( default = False)
+	finalsubmission = models.BooleanField( default = False)
+	
+	def __str__(self):
+		return(self.student.username + " : " + str(self.admission_status))
+
