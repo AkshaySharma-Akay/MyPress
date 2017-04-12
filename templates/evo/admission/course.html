@@ -1,0 +1,36 @@
+{% extends 'evo/admission/base.html' %}
+{% block title %} {{user}} : Course {% endblock %}
+{% block admission_body %}
+<section class='da-wrapper'>
+<section class='container'>
+
+<!-- Notifications -->
+
+<section class='da-notifications'>
+
+<article class='panel panel-default'>
+	<hgroup class='panel-heading'>
+		<span>Select Course:</span>
+	</hgroup>
+	<ul class="list-group">
+		{% for course in courses %}
+			<li class='list-group-item'>{{course.title}} | Status : 
+				<a href="{% url 'admission_add_course' course.id %}">
+				{% if course.admission_status %}	
+					Apply Now
+				{% else %}
+					Not Available
+				{% endif %}
+				</a>
+			</li>
+	    {% endfor %}
+	</ul>
+</article>
+
+
+</section><!-- / .da-notifications -->
+
+</section> <!-- / .container -->
+</section> <!-- / .da-wrapper -->
+{% endblock %}
+
