@@ -1,0 +1,31 @@
+{% extends 'evo/admission/index.html' %}
+{% block title %} Address {% endblock %}
+{% block admission_body_form %}
+<!-- .admission-form -->
+
+<section class='admission-form'>
+<section class='panel panel-default'>
+	<hgroup class='panel-heading'>
+		<span class='admission-form-icon'>
+			<i class='fa fa-user-circle'></i>
+		</span>
+		<span class='admission-form-heading'>Address's</span>
+		<span class='admission-form-heading'>{{user.username}} ({{course.title}}) </span>
+	</hgroup>
+
+	<form class='panel-body form' action='.' method='post'>{% csrf_token %}
+		<ul>
+			<h3><i class='fa fa-home'></i> Permanent Address :</h3>
+			{{p_form.as_ul}}
+
+			<h3><i class='fa fa-envelope'></i> Correspondence Address :</h3>
+			{{c_form.as_ul}}
+
+			<li><input type='submit' value='{{submit}}'/></li>
+
+		</ul>
+	</form>
+</section>
+</section>
+
+{% endblock %}
