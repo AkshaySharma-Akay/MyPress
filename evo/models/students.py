@@ -24,6 +24,7 @@ ADDRESS_CHOICES = [
 
 #Magic of Thinking Big
 
+#Check Status of Student, admission and profile
 class StatusStudent(models.Model):
 	student = models.OneToOneField(User, on_delete=models.CASCADE)
 	admission = models.BooleanField(default=False)
@@ -32,8 +33,9 @@ class StatusStudent(models.Model):
 	def __str__(self):
 		return(self.student.username)
 
-
+#Models To Store The Basic Details of The Student
 class StudentBasic(models.Model):
+	"Models to store the basic details of the student"
 	student = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='student_basic')
 	aadhaar_number = models.CharField("Addhar Number",max_length=12)
 	first_name = models.CharField("First Name",max_length=150)
@@ -47,7 +49,9 @@ class StudentBasic(models.Model):
 	def __str__(self):
 		return (self.student.username + self.first_name + self.last_name)
 
+#Model To Store The Addresses Of The Student
 class StudentAddress(models.Model):
+	"Model To Store The Addresses of the students"
 	student = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, related_name='student_address')
 	address_type= models.CharField("Address Type", max_length=1, choices=ADDRESS_CHOICES,default='p')
 	village =  models.CharField("Village/City/Town",max_length=70)
@@ -65,6 +69,7 @@ class StudentAddress(models.Model):
 			return (self.student.username + "'s " + " Correspondence Address" )
 
 class StudentCourse(models.Model):
+	"Model To store the students course status i.e. in which course he is enrolled"
 	student = models.OneToOneField(User, on_delete= models.CASCADE)
 	course = models.OneToOneField(Course, on_delete= models.CASCADE)
 
@@ -74,7 +79,6 @@ class StudentCourse(models.Model):
 class AdmissionStatus(models.Model):
 	"Model To Store the Admission Status Of A Student"
 	student =  models.OneToOneField(User, on_delete = models.CASCADE)
-	admission_status = models.BooleanField( default = False )
 	basic = models.BooleanField( default = False)
 	address = models.BooleanField( default = False)
 	qualifications = models.BooleanField( default = False)
