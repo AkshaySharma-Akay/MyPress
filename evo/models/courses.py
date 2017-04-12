@@ -6,11 +6,13 @@ class Course(models.Model):
 	description = models.TextField(max_length = 2000)
 	started_on = models.DateTimeField(auto_now_add = True)
 	updated_on = models.DateTimeField(auto_now = True)
-	years = models.DurationField()
+	years = models.PositiveSmallIntegerField()
 	semesters = models.PositiveSmallIntegerField()
+	admission_status = models.BooleanField(default=False)
 
 	def __str__(self):
-		return ("Course : ", str(title))
+		return ("Course :" + str(self.title))
+
 
 class Subject(models.Model):
 	courses = models.ManyToManyField(Course)
@@ -21,14 +23,19 @@ class Subject(models.Model):
 	creditpoints = models.PositiveSmallIntegerField()
 
 	def __str__(self):
-		return ("Subject: " + self.subject_id + " ." + self.title + " : " + str(creditpoints))
+		return ("Subject : " + self.title)
 
 class Semester(models.Model):
-	course = models.OneToOneField(Course)
-	semester_count = models.PositiveSmallIntegerField()
+	course = models.ForeignKey(Course, on_delete = models.CASCADE)
+	semester_count = models.PositiveSmallIntegerField(unique = True)
 	course = models.OneToOneField(Course)
 	subjects = models.ManyToManyField(Subject)
 
+	def __str__(self):
+		return ( self.course.title + " : Semester " + str(self.semester_count) )
+
+
+# don't uses these delete it later
 class Student(models.Model):
 	user = models.OneToOneField(User, on_delete = models.CASCADE)
 	course = models.OneToOneField(Course)
