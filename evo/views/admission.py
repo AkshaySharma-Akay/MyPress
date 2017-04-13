@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from evo.models import Course, StatusStudent, StudentBasic, StudentAddress, StudentCourse
+from evo.models import AdmissionStatus
 from evo.forms import StudentBasicForm, StudentAddressForm
 from django.contrib.auth.decorators import login_required
 
@@ -76,16 +77,21 @@ def admission_add_course(request, course_id):
 	except StudentCourse.DoesNotExist:
 		try:
 			selected_course = Course.objects.get(id = course_id)
-
 			if (selected_course.admission_status):
 				studentcourse = StudentCourse()
 				studentcourse.student = request.user
 				studentcourse.course = selected_course
 				studentcourse.save()
+
+				
+				#saving the details in admission_status module for first time
+				admission_status = AdmissionStatus()
+				admission_status.student = request.user
+				admission_status.save()
 				return redirect('admission')
 			else:
 				return HttpResponse('Sorry Admission For This Course Is Not Available!')
-		except:
+		except Course.DoesNotExist:
 			return HttpResponse('Sorry You Have Selected An Invalid Course')
 
 
@@ -116,6 +122,13 @@ def admission_basic(request):
 			request.user.first_name = form.cleaned_data['first_name']
 			request.user.last_name = form.cleaned_data['last_name']
 			request.user.save()
+
+			if (submit == 'Save'):
+				#set the basic details to True as the student saves the basic details for first time
+				admission_status = request.user.admissionstatus
+				admission_status.basic = True
+				admission_status.save()
+
 			return redirect('admission_address')
 		else:
 			context['form']= form
@@ -162,6 +175,7 @@ def admission_address(request):
 		p_form = StudentAddressForm(request.POST, instance=p_student,prefix='p')
 		c_form = StudentAddressForm(request.POST, instance=c_student,prefix='c')
 		
+
 		if((p_form.is_valid()) and (c_form.is_valid())):
 			p = p_form.save(commit=False)
 			p.address_type = 'p'
@@ -169,6 +183,13 @@ def admission_address(request):
 			c = c_form.save(commit=False)
 			c.address_type = 'c'
 			c.save()
+
+			if (submit == 'Save'):
+				#set the basic details to True as the student saves the basic details for first time
+				admission_status = request.user.admissionstatus
+				admission_status.basic = True
+				admission_status.save()
+
 			return redirect('/admission/courses/')
 
 		else:
