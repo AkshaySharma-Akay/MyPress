@@ -45,12 +45,24 @@
 			<tr>
 				<th class='scope'>1.</th>
 				<td>Basic Details</td>
-				<td>Not Completed</td>
+				<td>
+					{% if user.admissionstatus.basic %}
+						<a href="{% url 'admission_basic' %}">Completed</a>
+					{% else %}
+						Not Completed
+					{% endif %}
+				</td>
 			<tr>
 			<tr>
 				<th class='scope'>2.</th>
 				<td>Addresses</td>
-				<td>Not Completed</td>
+				<td>
+					{% if user.admissionstatus.address %}
+						<a href="{% url 'admission_address' %}">Completed</a>
+					{% else %}
+						Not Completed
+					{% endif %}
+				</td>
 			<tr>
 			<tr>
 				<th class='scope'>3.</th>
