@@ -7,8 +7,8 @@ from evo.models.courses import Course
 
 
 STUDENT_COURSE_OPTIONS = [
-	['1','10Th'],
-	['10+2','10+2'],	
+	['t','10Th'],
+	['pt','10+2'],	
 ]
 
 GENDER_CHOICES = [
@@ -75,7 +75,7 @@ class StudentAddress(models.Model):
 
 class StudentQualification(models.Model):
 	"Model To Store The Student's Qualification Details"
-	student = models.ForeignKey(User, on_delete = models.CASCADE)
+	student = models.ForeignKey(User, on_delete = models.CASCADE, related_name='studentqualification')
 	course = models.CharField(max_length = 3, choices = STUDENT_COURSE_OPTIONS)
 	year = models.IntegerField(validators=[MinValueValidator(1970), MaxValueValidator(2015)])
 	board = models.CharField(max_length = 150)
