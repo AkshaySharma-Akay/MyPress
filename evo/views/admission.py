@@ -32,11 +32,10 @@ def admission(request):
 
 	#if student selected the course show status else redirect to admission_course view
 	try:
-		course = request.user.studentcourse
 		template_name = 'evo/admission/index.html'
 		context = {
 			'user':request.user,
-			'course':course,
+			'course':request.user.studentcourse.course.title,
 		}
 		return render(request, template_name, context)
 
@@ -197,3 +196,23 @@ def admission_address(request):
 			context['c_form'] = c_form
 
 	return render(request, template_name,context)
+
+@login_required(login_url='')
+def admission_qualifications(request):
+	return HttpResponse("Qualification Details")
+
+@login_required(login_url='')
+def admission_uploads(request):
+	return HttpResponse("Uploads")
+
+
+@login_required(login_url='')
+def admission_terms(request):
+	return HttpResponse("Terms and Conditions")
+
+
+@login_required(login_url='')
+def admission_final_submission(request):
+	return HttpResponse("Admission Final Submission")
+
+	
