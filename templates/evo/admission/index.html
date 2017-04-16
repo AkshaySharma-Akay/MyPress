@@ -67,7 +67,14 @@
 			<tr>
 				<th class='scope'>3.</th>
 				<td>Qualification Details</td>
-				<td>Not Completed</td>
+				<td>
+					{% if user.admissionstatus.qualifications %}
+						<a href="{% url 'admission_qualifications' %}">Completed</a>
+					{% else %}
+						Not Completed
+					{% endif %}
+				</td>
+
 			<tr>
 			<tr>
 				<th class='scope'>4.</th>
