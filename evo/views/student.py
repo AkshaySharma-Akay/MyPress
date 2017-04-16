@@ -4,8 +4,14 @@ from evo.models import EvoUser, StatusStudent
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from checkviews import *
 
+@login_required(login_url = '/evo/login/')
+def is_student(request):
+	user = request.user
+	if user.evouser.account_type =='s':
+		return True
+	else:
+		return False
 
 #redirect student a/c to his status
 @login_required(login_url = '/evo/login/')
