@@ -1,15 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from evo.models import Course, StatusStudent, StudentBasic, StudentAddress, StudentCourse
-from evo.models import AdmissionStatus
-from evo.forms import StudentBasicForm, StudentAddressForm
+from evo.models import AdmissionStatus, StudentQualification
+from evo.forms import StudentBasicForm, StudentAddressForm, StudentQualificationForm
 from django.contrib.auth.decorators import login_required
 
 
 """ 
-	CTRL + C and CTRL + V
-
-if request.user.account_type
+	admission.py
 """
 
 def is_student(request):
@@ -136,6 +134,9 @@ def admission_basic(request):
 
 @login_required(login_url = 'evo/login/')
 def admission_address(request):
+	if not(is_student(request)):
+		return HttpResponse("Sorry You Can't Access This Page")
+
 	template_name = 'evo/admission/address.html'
 	try:
 		p_student = request.user.student_address.get(address_type = 'p')
@@ -183,13 +184,14 @@ def admission_address(request):
 			c.address_type = 'c'
 			c.save()
 
+			#Update the admission_status, completed this phase, this code is executed only once
 			if (submit == 'Save'):
-				#set the basic details to True as the student saves the basic details for first time
 				admission_status = request.user.admissionstatus
-				admission_status.basic = True
+				admission_status.address = True
 				admission_status.save()
 
-			return redirect('/admission/courses/')
+			#everthing done successfully redirect user to the next phase
+			return redirect('admission_qualificatoins')
 
 		else:
 			context['p_form'] = p_form
@@ -197,9 +199,73 @@ def admission_address(request):
 
 	return render(request, template_name,context)
 
+
 @login_required(login_url='')
 def admission_qualifications(request):
-	return HttpResponse("Qualification Details")
+	if not(is_student(request)):
+		return HttpResponse("Sorry You Can't Access This Page")
+
+	template_name = 'evo/admission/qualifications.html'
+	try:
+		p_student = request.user.studentqualification.get(course = 'pt')
+		p_submit = 'Update'
+		p_form = StudentQualificationForm(instance=p_student,prefix='p')
+
+	except StudentQualification.DoesNotExist:
+		p_student = StudentQualification(student=request.user)
+		p_submit = 'Save'
+		p_form = StudentQualificationForm(prefix='p')
+
+	try:
+		t_student = request.user.studentqualification.get(course = 't')
+		t_submit = 'Update'
+		t_form = StudentQualificationForm(instance=t_student, prefix='t')
+
+	except StudentQualification.DoesNotExist:
+		t_student = StudentQualification(student=request.user)
+		t_submit = 'Save'
+		t_form = StudentQualificationForm(prefix='t')
+
+
+	if(p_submit == t_submit):
+		submit = p_submit
+	else:
+		submit = 'Save'
+
+	context = {
+		'course':request.user.studentcourse.course.title,
+		't_form': t_form,
+		'p_form': p_form,
+		'submit': submit,
+	}
+
+	if request.method == 'POST':
+		t_form = StudentQualificationForm(request.POST, instance = t_student, prefix = 't')
+		p_form = StudentQualificationForm(request.POST, instance = p_student , prefix = 'p')
+
+		#validation of the forms
+		if ( (t_form.is_valid()) and (p_form.is_valid()) ):
+			t = t_form.save(commit = False)
+			t.course = 't'
+			t.save()
+			p = p_form.save(commit = False)
+			p.course = 'pt'
+			p.save()
+			
+			#Update the admission_status, completed this phase, this code is executed only once
+			if (submit == 'Save'):
+				admission_status = request.user.admissionstatus
+				admission_status.qualifications = True
+				admission_status.save()
+
+			#everthing done successfully redirect user to the next phase
+			return redirect('admission_uploads')
+
+		else:
+			context['p_form'] = p_form
+			context['t_form'] = t_form
+
+	return render(request, template_name,context)
 
 @login_required(login_url='')
 def admission_uploads(request):
