@@ -6,6 +6,11 @@ from evo.models.courses import Course
 
 
 
+STUDENT_COURSE_OPTIONS = [
+	['1','10Th'],
+	['10+2','10+2'],	
+]
+
 GENDER_CHOICES = [
 	['m','Male'],
 	['f','Female']
@@ -68,10 +73,22 @@ class StudentAddress(models.Model):
 		else:
 			return (self.student.username + "'s " + " Correspondence Address" )
 
+class StudentQualification(models.Model):
+	"Model To Store The Student's Qualification Details"
+	student = models.ForeignKey(User, on_delete = models.CASCADE)
+	course = models.CharField(max_length = 3, choices = STUDENT_COURSE_OPTIONS)
+	year = models.IntegerField(validators=[MinValueValidator(1970), MaxValueValidator(2015)])
+	board = models.CharField(max_length = 150)
+	institute = models.CharField(max_length = 150)
+	percentage = models.IntegerField(validators=[MinValueValidator(33), MaxValueValidator(100)])
+
+	def __str__(self):
+		return (self.student.username + self.course)
+
 class StudentCourse(models.Model):
 	"Model To store the students course status i.e. in which course he is enrolled"
 	student = models.OneToOneField(User, on_delete= models.CASCADE)
-	course = models.OneToOneField(Course, on_delete= models.CASCADE)
+	course = models.ForeignKey(Course, on_delete= models.CASCADE)
 
 	def __str__(self):
 		return (self.course.title)
@@ -87,5 +104,5 @@ class AdmissionStatus(models.Model):
 	finalsubmission = models.BooleanField( default = False)
 	
 	def __str__(self):
-		return(self.student.username + " : " + str(self.admission_status))
+		return(self.student.username + " : ")
 
