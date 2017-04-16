@@ -9,10 +9,10 @@
 	<ol class="breadcrumb">
 		<li><a href="{% url 'admission_basic' %}">Basic Details</a></li>
 		<li><a href="{% url 'admission_address' %}">Addresses</a></li>
-		<li><a href="#">Qualification Details</a></li>
-		<li><a href="#">Uploads</a></li>
-		<li><a href="#">Terms and Condition</a></li>
-		<li><a href="#">Final Submission</a></li>
+		<li><a href="{% url 'admission_qualifications' %}">Qualification Details</a></li>
+		<li><a href="{% url 'admission_uploads' %}">Uploads</a></li>
+		<li><a href="{% url 'admission_terms' %}">Terms and Condition</a></li>
+		<li><a href="{% url 'admission_final_submission' %}">Final Submission</a></li>
 	</ol>
 </nav>
 
@@ -28,7 +28,7 @@
 			<i class='fa fa-user-circle'></i>
 		</span>
 		<span class='admission-form-heading'>Welcome To Admission Panel</span>
-		<span class='admission-form-heading'>{{user.username}}</span>
+		<span class='admission-form-heading'>{{user.username}} ({{course.title}}) </span>
 	</hgroup>
 	<article class='panel-body'>
 		<h3>Your Admission Status: </h3>
