@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.forms import formset_factory
-from evo.models import StudentBasic,StudentAddress
+from evo.models import StudentBasic,StudentAddress, StudentQualification
 
 
 #SigninForm for signin for everyone
@@ -39,4 +39,8 @@ class StudentAddressForm(forms.ModelForm):
 		fields = '__all__'
 		exclude = ['student','address_type']
 
-
+class StudentQualificationForm(forms.ModelForm):
+	class Meta:
+		model = StudentQualification
+		fields = '__all__'
+		exclude = ['student','course']
