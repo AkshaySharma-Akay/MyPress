@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from evo.models import Course, StatusStudent, StudentBasic, StudentAddress, StudentCourse
-from evo.models import AdmissionStatus, StudentQualification
-from evo.forms import StudentBasicForm, StudentAddressForm, StudentQualificationForm
+from evo.models import AdmissionStatus, StudentQualification, StudentUploads
+from evo.forms import StudentBasicForm, StudentAddressForm, StudentQualificationForm, StudentUploadsForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -269,7 +269,43 @@ def admission_qualifications(request):
 
 @login_required(login_url='')
 def admission_uploads(request):
-	return HttpResponse("Uploads")
+	if not(is_student(request)):
+		return HttpResponse("Sorry You Can't Access This Page")
+
+	template_name = 'evo/admission/uploads.html'
+	
+	try:
+		student = request.user.student_uploads
+		submit = 'Update'
+		form = StudentUploadsForm(instance=student)
+
+	except StudentUploads.DoesNotExist:
+		student = StudentUploads(student=request.user)
+		submit= 'Save'
+		form = StudentUploadsForm()
+
+	context={
+		'form':form,
+		'submit':submit,
+		'course':request.user.studentcourse.course.title,
+	}
+
+	if request.method == 'POST':
+		form = StudentUploadsForm(request.POST, request.FILES , instance=student)
+		if form.is_valid():
+			form.save()
+
+			if (submit == 'Save'):
+				#set the basic details to True as the student saves the basic details for first time
+				admission_status = request.user.admissionstatus
+				admission_status.uploads = True
+				admission_status.save()
+
+			return redirect('admission_terms')
+		else:
+			context['form']= form
+	return render(request, template_name,context)
+
 
 
 @login_required(login_url='')
