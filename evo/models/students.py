@@ -106,3 +106,13 @@ class AdmissionStatus(models.Model):
 	def __str__(self):
 		return(self.student.username + " : ")
 
+class StudentUploads(models.Model):
+	"Model to Store the upload docs"
+	student = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_uploads')
+	stu_image = models.ImageField("Student Image", upload_to = 'stu_images/', max_length=120)
+	signature = models.ImageField("Signature", upload_to = 'stu_images/', max_length=120)
+	tenth = models.ImageField("Tenth Details Marks", upload_to ='stu_doc/', max_length=120)
+	plustwo = models.ImageField("10+2 Details Marks", upload_to ='stu_doc/', max_length=120)
+
+	def __str__(self):
+		return (self.student.username)
