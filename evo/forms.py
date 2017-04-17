@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.forms import formset_factory
-from evo.models import StudentBasic,StudentAddress, StudentQualification
+from evo.models import StudentBasic,StudentAddress, StudentQualification,StudentUploads
 
 
 #SigninForm for signin for everyone
@@ -44,3 +44,13 @@ class StudentQualificationForm(forms.ModelForm):
 		model = StudentQualification
 		fields = '__all__'
 		exclude = ['student','course']
+
+class StudentUploadsForm(forms.ModelForm):
+	class Meta:
+		model = StudentUploads
+		fields ='__all__'
+		exclude = ['student']
+
+		#def clean_stu_image(self):
+		#	stu_image = self.cleaned_data['stu_image']
+
