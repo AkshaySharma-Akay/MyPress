@@ -79,7 +79,13 @@
 			<tr>
 				<th class='scope'>4.</th>
 				<td>Uploads</td>
-				<td>Not Completed</td>
+				<td>
+					{% if user.admissionstatus.uploads %}
+						<a href="{% url 'admission_uploads' %}">Completed</a>
+					{% else %}
+						Not Completed
+					{% endif %}
+				</td>
 			<tr>
 			<tr>
 				<th class='scope'>5.</th>
