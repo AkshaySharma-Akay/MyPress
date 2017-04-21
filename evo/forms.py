@@ -54,3 +54,10 @@ class StudentUploadsForm(forms.ModelForm):
 		#def clean_stu_image(self):
 		#	stu_image = self.cleaned_data['stu_image']
 
+TERMS_CHOICE = [
+	['a','Accept'],
+	['d','Decline']
+]
+
+class StudentTermsForm(forms.Form):
+	terms = forms.ChoiceField(choices=TERMS_CHOICE, widget=forms.RadioSelect())
