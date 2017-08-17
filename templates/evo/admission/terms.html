@@ -1,0 +1,41 @@
+{% extends 'evo/admission/index.html' %}
+{% block title %} Uploads  {% endblock %}
+{% block admission_body_form %}
+<!-- .admission-form -->
+
+<section class='admission-form'>
+<section class='panel panel-default'>
+	<hgroup class='panel-heading'>
+		<span class='admission-form-icon'>
+			<i class='fa fa-user-circle'></i>
+		</span>
+		<span class='admission-form-heading'>Terms And Condition</span>
+		<span class='admission-form-heading'>{{user.username}} ({{course.title}}) </span>
+	</hgroup>
+	<article class='panel-body'>
+	<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	{% autoescape off %}
+		{{article.content}}
+	{% endautoescape %}
+	</p>
+	{% if msg %} 
+		<span style="color:#EA724B;">{{msg}}</span>
+	{% endif %}
+	{% if not form %}<br /><br /><br />
+		<span style='margin:20px; padding:10px 20px; background-color:#333146; border-radius:5px;'>
+			<a style="color:#fff;" href="{% url 'admission_final_submission' %}">Next</a>
+		</span>
+	{% endif %}
+	</article>
+	{% if form %}
+	<form class='panel-body form' action='.' method='post'>{% csrf_token %}
+		<ul>
+			{{form.as_ul}}
+			<li><input type='submit' value='{{submit}}'/></li>
+		</ul>
+	</form>
+	{% endif %}
+
+</section>
+</section>
+{% endblock %}

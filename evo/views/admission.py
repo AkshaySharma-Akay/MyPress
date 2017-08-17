@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from evo.models import Course, StatusStudent, StudentBasic, StudentAddress, StudentCourse
-from evo.models import AdmissionStatus, StudentQualification, StudentUploads
+from evo.models import AdmissionStatus, StudentQualification, StudentUploads, EvoArticle, StatusStudent
 from evo.forms import StudentBasicForm, StudentAddressForm, StudentQualificationForm, StudentUploadsForm
+from evo.forms import StudentTermsForm, StudentFinalSubmissionForm
 from django.contrib.auth.decorators import login_required
-
 
 """ 
 	admission.py
@@ -191,7 +191,7 @@ def admission_address(request):
 				admission_status.save()
 
 			#everthing done successfully redirect user to the next phase
-			return redirect('admission_qualificatoins')
+			return redirect('admission_qualifications')
 
 		else:
 			context['p_form'] = p_form
@@ -200,7 +200,7 @@ def admission_address(request):
 	return render(request, template_name,context)
 
 
-@login_required(login_url='')
+@login_required(login_url='evo/login/')
 def admission_qualifications(request):
 	if not(is_student(request)):
 		return HttpResponse("Sorry You Can't Access This Page")
@@ -267,7 +267,7 @@ def admission_qualifications(request):
 
 	return render(request, template_name,context)
 
-@login_required(login_url='')
+@login_required(login_url='evo/login/')
 def admission_uploads(request):
 	if not(is_student(request)):
 		return HttpResponse("Sorry You Can't Access This Page")
@@ -308,13 +308,149 @@ def admission_uploads(request):
 
 
 
-@login_required(login_url='')
+@login_required(login_url='evo/login/')
 def admission_terms(request):
-	return HttpResponse("Terms and Conditions")
+	"View For Terms and Condition Page"
+	if not(is_student(request)):
+		return HttpResponse("Sorry You Can't Access This Page")
+
+	terms = request.user.admissionstatus.terms
+	submit = 'Next'
+
+	terms_article = EvoArticle.objects.get(title = "Terms And Conditions")
+	if request.user.admissionstatus.terms:
+		form = False
+		msg = "Already Accepted, Please Move To Next"
+	else:	
+		form = StudentTermsForm()
+		msg = ''
+
+	template_name = "evo/admission/terms.html"
+
+	context={
+		'submit':submit,
+		'article' : terms_article,
+		'course': request.user.studentcourse.course.title,
+		'form':form,
+		'msg':msg,
+	}
+	if request.method == 'POST':
+		form = StudentTermsForm(request.POST)
+		if form.is_valid():
+			value = form.cleaned_data['terms']
+			if value == 'a':
+				ad_status = request.user.admissionstatus
+				ad_status.terms = True
+				ad_status.save()
+			else:
+				context['msg'] = "Sorry You Can't Move To Next, Without Accepting the Terms and Conditions.."
+		else:
+			context['form'] = form
+	return render(request, template_name, context)
 
 
-@login_required(login_url='')
+@login_required(login_url='evo/login/')
 def admission_final_submission(request):
-	return HttpResponse("Admission Final Submission")
+	"View For Terms and Condition Page"
+	if not(is_student(request)):
+		return HttpResponse("Sorry You Can't Access This Page")
+
 
 	
+	status = request.user.admissionstatus
+	status_list = [status.basic, status.address, status.qualifications, status.uploads, status.terms]
+	
+	if False in status_list:
+		return HttpResponse("Sorry You Can't Access This Page Until You Have Completed Other Admission Processes")
+
+	template_name = "evo/admission/final_submission.html"
+
+	final_submission = request.user.admissionstatus.finalsubmission
+	print(final_submission)
+	submit = 'Submit'
+
+	if request.user.admissionstatus.finalsubmission:
+		form = False
+		msg = "Already Accepted, Please Download your Confirmation Page"
+	else:	
+		form = StudentFinalSubmissionForm()
+		msg = ''
+
+	context = {
+		'submit':submit,
+		'form':form,
+		'msg':msg,
+		'user':request.user,
+		'basic_details': request.user.student_basic,
+		'p_address': request.user.student_address.get(address_type='p'),
+		'c_address': request.user.student_address.get(address_type='c'),
+		'course': request.user.studentcourse.course,
+		'qualifications_t': request.user.studentqualification.get(course = 't'),
+		'qualifications_pt': request.user.studentqualification.get(course= 'pt'),
+		'uploads':request.user.student_uploads,
+	}
+
+	if request.method == 'POST':
+		form = StudentFinalSubmissionForm(request.POST)
+		if form.is_valid():
+			value = form.cleaned_data['finalsubmission']
+			if value == 'a':
+				ad_status = request.user.admissionstatus
+				ad_status.finalsubmission = True
+				ad_status.save()
+				student_status = request.user.statusstudent
+				student_status.admission = True
+				student_status.save()
+				return redirect(admission)
+			else:
+				context['msg'] = "Sorry you have to complete this step first"
+		else:
+			context['form'] = form
+	
+	return render(request, template_name,context)
+
+	
+@login_required(login_url='evo/login/')
+def confirmation_page(request):
+	"View For Terms and Condition Page"
+	if not(is_student(request)):
+		return HttpResponse("Sorry You Can't Access This Page")
+
+	
+	template_name = "evo/admission/final_submission.html"
+	context ={
+		'user':request.user,
+		'basic_details': request.user.student_basic,
+		'p_address': request.user.student_address.get(address_type='p'),
+		'c_address': request.user.student_address.get(address_type='c'),
+		'course': request.user.studentcourse.course,
+		'qualifications_t': request.user.studentqualification.get(course = 't'),
+		'qualifications_pt': request.user.studentqualification.get(course= 'pt'),
+		'uploads':request.user.student_uploads,
+	}
+	return render(request, template_name,context)
+
+
+@login_required(login_url='evo/login/')
+def admission_confirm(request):
+	"View For Terms and Condition Page"
+	if not(is_student(request)):
+		return HttpResponse("Sorry You Can't Access This Page")
+
+	status  = StatusStudent.objects.get(student = request.user)
+	if status.admission == False:
+		return HttpResponse("Please, First Complete Your Admission Process")
+
+	
+	template_name = "evo/dashboard/confirmationpage.html"
+	context ={
+		'user':request.user,
+		'basic_details': request.user.student_basic,
+		'p_address': request.user.student_address.get(address_type='p'),
+		'c_address': request.user.student_address.get(address_type='c'),
+		'course': request.user.studentcourse.course,
+		'qualifications_t': request.user.studentqualification.get(course = 't'),
+		'qualifications_pt': request.user.studentqualification.get(course= 'pt'),
+		'uploads':request.user.student_uploads,
+	}
+	return render(request, template_name,context)

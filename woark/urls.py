@@ -5,6 +5,8 @@ from . import views
 urlpatterns = [
 	url(r'^$', views.home, name='home'),
 	url(r'^blog/$', views.blog , name='blog'),
+	url(r'^aboutus/$', views.about, name='about'),
+	url(r'^contactus/$', views.about, name='about'),
 
 	#blogs
 	url(r'^blog/(?P<blog_id>[0-9]+)/$', views.get_blog, name='get_blog'),

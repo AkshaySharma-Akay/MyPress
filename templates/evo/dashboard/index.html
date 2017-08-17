@@ -1,0 +1,10 @@
+{% extends 'evo/dashboard/base.html' %}
+{% load staticfiles %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block dahead %} {% endblock %}
+
+{% block dabody %}
+	Hello {{request.user}}
+{% endblock %}

@@ -8,5 +8,33 @@
 
 {% block add_page_body %}
 
+
+<!-- News Feed -->
+
+<section class='block-feed'>
+<section class='container'>
+<hgroup class='block-heading-left'>
+	<span><i class='fa fa-newspaper'></i> News And Notifications</span>
+</hgroup>
+<section class='row'>
+<section class='row col-md-12'>
+{% for article in articles %}
+	<article class='col-md-4'>
+		<div class="thumbnail">
+		    <img src="{{article.article_image.url}}" alt="..."/>
+		    <div class="caption">
+		        <a href='#'>{{article.title}}</a>
+		        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{article.articlecontent.markup_content|lower|truncatewords:30}}</p>
+      		</div>
+    	</div>
+	</article>
+{% endfor %}
+
+</section>
+</section> <!-- / .row -->
+</section>
+</section><!-- / .block-feed -->
+<!-- add the slide show here -->
+
 {% endblock %}
 

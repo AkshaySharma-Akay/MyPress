@@ -61,3 +61,6 @@ TERMS_CHOICE = [
 
 class StudentTermsForm(forms.Form):
 	terms = forms.ChoiceField(choices=TERMS_CHOICE, widget=forms.RadioSelect())
+
+class StudentFinalSubmissionForm(forms.Form):
+	finalsubmission = forms.ChoiceField(choices=TERMS_CHOICE, widget=forms.RadioSelect())

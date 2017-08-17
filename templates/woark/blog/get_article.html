@@ -22,7 +22,9 @@
 			</span><hr />
 		</hgroup>
 	</header>
-	
+	{% if article.article_image %}
+		<img class='article-image' src='{{article.article_image.url}}''/>
+	{% endif%}
 	<p>
 		{{article_content.markup_content}}
 	</p>

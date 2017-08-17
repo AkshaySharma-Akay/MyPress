@@ -2,6 +2,7 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+	url(r'^$', views.signin, name='signin'),
 	url(r'^login/$',views.signin, name='signin'),
 	url(r'^signup/$',views.signup, name='signup'),
 
@@ -19,4 +20,7 @@ urlpatterns = [
 	url(r'^admission/uploads/$', views.admission_uploads , name='admission_uploads'),
 	url(r'^admission/terms/$', views.admission_terms , name='admission_terms'),
 	url(r'^admission/finalsubmission/$', views.admission_final_submission , name='admission_final_submission'),
+
+	#student conf
+	url(r'^student/dashboard/confirmationpage/$', views.admission_confirm, name='admission_confirm'),
 ]

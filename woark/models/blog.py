@@ -24,6 +24,7 @@ class Article(models.Model):
 	author = models.ForeignKey(User, on_delete= models.CASCADE)
 #main part
 	title = models.CharField(max_length=100)
+	article_image = models.ImageField(upload_to='article/' + str(id) + '/',default='')
 #tag
 	tag = models.ManyToManyField(ArticleTag)#on_delete what to do with article check that
 #dates

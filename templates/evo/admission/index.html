@@ -90,12 +90,24 @@
 			<tr>
 				<th class='scope'>5.</th>
 				<td>Terms and Conditions</td>
-				<td>Not Completed</td>
+				<td>
+					{% if user.admissionstatus.terms %}
+						<a href="{% url 'admission_terms' %}">Completed</a>
+					{% else %}
+						Not Completed
+					{% endif %}
+				</td>
 			<tr>
 			<tr>
-				<th class='scope'>6.</th>
-				<td>Confirmation Pages</td>
-				<td>Not Completed</td>
+			<th class='scope'>6.</th>
+				<td>Final Submission</td>
+				<td>
+					{% if user.admissionstatus.finalsubmission %}
+						<a href="{% url 'admission_final_submission' %}">Completed</a>
+					{% else %}
+						Not Completed
+					{% endif %}
+				</td>
 			<tr>
 		</tbody>
 	</table>

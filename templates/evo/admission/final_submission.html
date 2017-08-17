@@ -1,0 +1,124 @@
+{% extends 'evo/admission/index.html' %}
+{% block title %} Final Submission  {% endblock %}
+{% block admission_body_form %}
+<!-- .admission-form -->
+
+<section class='admission-form'>
+<section class='panel panel-default'>.
+	<hgroup class='panel-heading'>
+		<span class='admission-form-icon'>
+			<i class='fa fa-user-circle'></i>
+		</span>
+		<span class='admission-form-heading'>Final Submission Page</span>
+		<span class='admission-form-heading'>{{user.username}} ( {{course}}) </span>
+	</hgroup>
+	<style>
+	.panel-body ul li span{
+		font-weight:bold;
+		min-width:250px;
+		display:inline-block;
+		bac
+	}
+	.panel-body ul li p{
+		display:inline-block;
+		max-width:350px;
+		padding:10px;
+		vertical-align: center;
+	}
+	.show-image img{
+		width:200px;
+		height:200px;
+	}
+	</style>
+	<article class='panel-body form'>
+	<h3><i class='fa fa-edit'></i> Basic Details :</h3>
+	<ul>
+		<li><span>Addhaar Number : </span> {{basic_details.aadhaar_number}}</li>
+		<li><span>First Name : </span> {{basic_details.first_name}}</li>
+		<li><span>Last Name : </span>  {{basic_details.last_name}}</li>
+		<li><span>Father's Name : </span> {{basic_details.fathers_name}}</li>
+		<li><span>Mother's Name : </span> {{basic_details.fathers_name}}</li>
+		<li><span>DOB : </span> {{basic_details.dob}}</li>
+		<li><span>Gender : </span> {{basic_details.gender}}</li>
+		<li><span>Category : </span> {{basic_details.category}}</li>
+	</ul>
+	
+	<h3><i class='fa fa-home'></i> Addresses :</h3>
+	<ul>
+		<li>
+			<span>Permanent Address : </span> 
+			<p>
+				Village {{p_address.village}} P.O. {{p_address.postoffice}}, 
+				Pin {{p_address.pincode}}, Tehsil {{p_address.tehsil}},
+				{{p_address.district}}, {{p_address.state}}
+			</p>
+		</li>
+		<li>
+			<span>Correspondance Address : </span> 
+			<p>
+				Village {{c_address.village}} P.O. {{c_address.postoffice}}, 
+				Pin {{c_address.pincode}}, Tehsil {{c_address.tehsil}},
+				{{c_address.district}}, {{c_address.state}}
+			</p>
+		</li>
+	</ul>
+
+	<h3><i class='fa fa-book'></i>Qualification Details</h3>
+	<h4><strong>10th</strong></h4>
+	<ul>
+		<li>
+			<span>Year :</span>  {{qualifications_t.year}}
+		</li>
+		<li>
+			<span>Board :</span>  {{qualifications_t.board}}
+		</li>
+		<li>
+			<span>Institute :</span>  {{qualifications_t.institute}}
+		</li>
+		<li>
+			<span>Percentage :</span>  {{qualifications_t.percentage}}
+		</li>
+	</ul>
+	<h4><strong>10+2</strong></h4>
+	<ul>
+		<li>
+			<span>Year :</span>  {{qualifications_pt.year}}
+		</li>
+		<li>
+			<span>Board :</span>  {{qualifications_pt.board}}
+		</li>
+		<li>
+			<span>Institute :</span>  {{qualifications_pt.institute}}
+		</li>
+		<li>
+			<span>Percentage :</span>  {{qualifications_pt.percentage}}
+		</li>
+		
+	</ul>
+
+	<h3><i class='fa fa-upload'></i> Uploads:</h3>
+
+	<ul class='show-image'>
+		<li><a target = 'blank' href='{{uploads.stu_image.url}}'>View Uploaded Image</a></li>
+		<li><a target = 'blank' href='{{uploads.signature.url}}'> View Uploaded Signatures </a></li>
+		<li><a target = 'blank' href='{{uploads.tenth.url}}'> Tenth Marks Sheet </a></li>
+		<li><a target = 'blank' href='{{uploads.plustwo.url}}'> 10+2 Marks Sheet </a></li>
+	</ul>
+
+</article>
+
+{% if msg %} 
+		<span style="color:#EA724B;">{{msg}}</span>
+{% endif %}
+
+{% if form %}
+	<form class='panel-body form' action='.' method='post'>{% csrf_token %}
+		<ul>
+			{{form.as_ul}}
+			<li><input type='submit' value='{{submit}}'/></li>
+		</ul>
+	</form>
+	{% endif %}
+</section>
+</section>
+{% endblock %}

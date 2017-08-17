@@ -21,14 +21,17 @@ def student_dashboard(request):
 			status  = StatusStudent.objects.get(student = request.user)
 			if status.admission == False:
 				return redirect('student_welcome')
-			elif status.profile == False:
-				return redirect('student_profile')
 			else:
-				return redirect('student')
+				template_name = 'evo/dashboard/student_dashboard.html'
+				context= {
+					'user':request.user,
+				}
+				return render(request, template_name, context)
+
+
 		except StatusStudent.DoesNotExist:
 			return HttpResponse("Sorry Something Went Wrong Contact Administration")
 
-		return HttpResponse('Welcome USer')
 	else:
 		return HttpResponse("Sorry You Can't Access This Page")
 

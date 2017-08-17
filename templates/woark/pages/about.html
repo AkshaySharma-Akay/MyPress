@@ -1,0 +1,142 @@
+{% extends 'woark/pages/base.html' %}
+{% load staticfiles %}
+
+{% block add_page_head %}
+<!-- home page additional css -->
+	<link rel='stylesheet' type='text/css' href="{% static 'woark/pages/css/home.css'%}"/>
+{% endblock %}
+
+{% block add_page_body %}
+<style type='text/css'>
+
+/* override the header-nav style to take off the margin of .header*/
+.header-nav{
+	margin:0;
+	box-shadow:none;
+}
+
+
+/* .blog-header  */
+.blog-header{
+	border-bottom:1px solid #e3dada;
+}
+.blog-title{
+	display:block;
+	text-align: center;
+	font-size:30px;
+	font-weight:bold;
+	padding:0 0 20px 0;
+}
+.blog-title a{
+	text-decoration: none;
+	color:#A71E1E;
+}
+.blog-description{
+	display:block;
+	text-align: center;
+	color:#333;
+	font-weight: bold;
+	font-size:17px;
+	padding:10px 0 20px 0;
+}
+
+
+/* .article-view */
+.article-view{
+	margin:30px 0;
+	background-color:#fff;
+	padding:15px;
+	border-radius:15px 0 0 0;
+	box-shadow:0px 0px 3px -1px #E0CCCC;
+}
+
+.article-view-heading{
+	display:block;
+	padding:10px 0;
+	font-size:18px;
+	font-weight:bold;
+}
+.article-view-subheading{
+	display:block;
+	padding:5px 0 10px 0;
+	font-size:14px;
+	font-weight: bold;
+}
+.article-view p{
+	color:#666;
+	font-size:14px;
+}
+.article-view-footer{
+	display:block;
+	padding:10px 0;
+	text-align: right;
+}
+.article-view-footer a{
+	display:inline-block;
+	padding:10px 20px;
+	margin:5px;
+	background-color:#A71E1E;
+	color:#fff;
+	font-weight: bold;
+	font-size:12px;
+	border-radius:7px;
+	border:1px solid #A71E1E;
+	transition:all 0.5s ease-in;
+}
+.article-view-footer a:hover{
+	background-color: #fff;
+	color:#A71E1E;
+}
+.article-view-heading a{
+	text-decoration: none;
+	color:#20272A;
+}
+.article-view-subheading a{
+	color:#A71E1E;
+}
+/* .article-wrapper */
+.article-wrapper{
+	margin:30px 0;
+}
+
+/* .article for single articles */
+
+.article{
+	background-color:#fff;
+	padding:50px 80px;
+	box-shadow:3px 3px 14px -7px #353030;
+}
+@media all and (max-width:978px)
+{
+	.article{
+		padding:10px 20px;
+	}
+}
+
+
+
+</style>
+<!-- .article -->
+<section class='article-wrapper'>
+<section class='container'>
+<section class='article'>
+<!-- Adding the Blog header here -->
+<hgroup class='blog-header'>
+	<span class='blog-title'><a href='#'>Contact Us Or Know More About Us</a></span><br /><br />
+	<span class='blog-description'>
+		{% if site_social_profile %}
+			{% for i in site_social_profile %}
+				<span><a href='{{i.link}}'><i class='{{i.icon}}'></i></a></span>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			{% endfor %}
+		{% endif %}
+	</span>
+</hgroup>
+
+</section>
+</section>
+</section>
+
+
+{% endblock %}
+

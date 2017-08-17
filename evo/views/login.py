@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from evo.forms import SigninForm, SignupForm
 from evo.models import EvoUser, StatusStudent
 
+
+
 @login_required(login_url = '/student/login/')
 def signinredirect(request):
 	user = request.user
